@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     apt-transport-https \
     software-properties-common \
+    # AGREGAR WGET Y CURL AQUÍ
+    wget \
+    curl \
     git \
     unzip \
     # Limpiar
@@ -17,6 +20,7 @@ RUN apt-get update && apt-get install -y \
 # Agregar el repositorio PPA de SURY (necesario para PHP 8.3 en Debian)
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/sury-php.list
+
 
 # Actualizar e instalar PHP 8.3 y las extensiones necesarias
 RUN apt-get update && apt-get install -y \
