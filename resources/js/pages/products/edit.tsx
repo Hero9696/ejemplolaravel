@@ -10,18 +10,17 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-interface Product{
-id: number;
-name: string;
-stock: number;
-price: number;
-description: string;
-
+interface Product {
+    id: number;
+    name: string;
+    stock: number;
+    price: number;
+    description: string;
 }
 
-export default function ProductEdit({product}: {product:Product}) {
+export default function ProductEdit({ product }: { product: Product }) {
     /* , processing, errors  */
-    const { data, setData, put, errors } = useForm({
+    const { data, setData, put, errors, processing } = useForm({
         name: product.name,
         description: product.description,
         stock: product.stock,
@@ -64,9 +63,11 @@ export default function ProductEdit({product}: {product:Product}) {
                             placeholder="Product Stock"
                             className="w-full border p-2"
                             value={data.stock}
-                            onChange={(e) => setData('stock',Number(e.target.value) )}
+                            onChange={(e) =>
+                                setData('stock', Number(e.target.value))
+                            }
                         />
-                         {errors.stock && (
+                        {errors.stock && (
                             <div className="mt-1 flex items-center text-sm text-red-500">
                                 {errors.stock}
                             </div>
@@ -79,9 +80,11 @@ export default function ProductEdit({product}: {product:Product}) {
                             placeholder="Product Price"
                             className="w-full border p-2"
                             value={data.price}
-                            onChange={(e) => setData('price', Number(e.target.value))}
+                            onChange={(e) =>
+                                setData('price', Number(e.target.value))
+                            }
                         />
-                         {errors.price && (
+                        {errors.price && (
                             <div className="mt-1 flex items-center text-sm text-red-500">
                                 {errors.price}
                             </div>
@@ -95,7 +98,7 @@ export default function ProductEdit({product}: {product:Product}) {
                                 setData('description', e.target.value)
                             }
                         />
-                         {errors.description && (
+                        {errors.description && (
                             <div className="mt-1 flex items-center text-sm text-red-500">
                                 {errors.description}
                             </div>
@@ -104,6 +107,7 @@ export default function ProductEdit({product}: {product:Product}) {
                     <button
                         type="submit"
                         className="bg-blue-500 p-2 text-white"
+                        disabled={processing}
                     >
                         Update Product
                     </button>

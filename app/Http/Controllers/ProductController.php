@@ -62,7 +62,12 @@ return redirect()->route('products.index');
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+    $validated = $request->validated();
+
+    $product->update($validated);
+
+    return redirect()->route('products.index');
+
     }
 
     /**

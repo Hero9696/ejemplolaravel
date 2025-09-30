@@ -12,7 +12,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function ProductCreate() {
     /* , processing, errors  */
-    const { data, setData, post, errors } = useForm({
+    const { data, setData, post, errors, processing } = useForm({
         name: '',
         description: '',
         stock: '',
@@ -95,6 +95,7 @@ export default function ProductCreate() {
                     <button
                         type="submit"
                         className="bg-blue-500 p-2 text-white"
+                        disabled={processing}
                     >
                         Create Product
                     </button>
