@@ -11,7 +11,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function ProductCreate() {
-    const { data, setData, post, processing, errors } = useForm({
+    /* , processing, errors  */
+    const { data, setData, post} = useForm({
         name: '',
         description: '',
         stock: '',
