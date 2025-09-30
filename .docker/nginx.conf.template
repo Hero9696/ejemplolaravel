@@ -1,7 +1,9 @@
 server {
-    listen 80;
+
+    listen ${PORT} default_server;
+
     index index.php index.html;
-    root /app/public;
+    root /var/www/html/public; # Usar /var/www/html/public para mayor consistencia en la FASE 2
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;

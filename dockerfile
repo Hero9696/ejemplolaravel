@@ -84,7 +84,7 @@ RUN mkdir -p /var/www/html/storage/framework/cache \
     && chown -R www-data:www-data /var/www/html/bootstrap/cache
 
 # Configurar Nginx y Supervisor
-COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx.conf.template /etc/nginx/conf.d/default.conf
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Exponer el puerto y CMD de inicio
