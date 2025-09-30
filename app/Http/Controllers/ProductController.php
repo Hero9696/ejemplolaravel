@@ -52,7 +52,9 @@ return redirect()->route('products.index');
      */
     public function edit(Product $product)
     {
-        //
+        return inertia('products/edit', [
+            'product'=>$product
+        ]);
     }
 
     /**
