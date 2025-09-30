@@ -3,8 +3,22 @@
 # =========================================================
 FROM node:20-slim as build
 
-# Instalar PHP y Composer en el entorno de build de Node
-# Esto nos permite ejecutar Composer y Node/Vite en la misma etapa.
+# Instalar software de gestión de claves y repositorios
+RUN apt-get update && apt-get install -y \
+    lsb-release \
+    ca-certificates \
+    apt-transport-https \
+    software-properties-common \
+    git \
+    unzip \
+    # Limpiar
+    && rm -rf /var/lib/apt/lists/*
+
+# Agregar el repositorio PPA de SURY (necesario para PHP 8.3 en Debian)
+RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
+    && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/sury-php.list
+
+# Actualizar e instalar PHP 8.3 y las extensiones necesarias
 RUN apt-get update && apt-get install -y \
     php8.3-cli \
     php8.3-pgsql \
@@ -12,11 +26,11 @@ RUN apt-get update && apt-get install -y \
     php8.3-mbstring \
     php8.3-xml \
     php8.3-curl \
-    unzip \
-    git \
+    # Limpiar al final
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar Composer globalmente
+# Instalar Composer globalmente (copia desde la imagen oficial de Composer)
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Configurar el directorio de trabajo
