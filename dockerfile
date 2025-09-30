@@ -60,19 +60,16 @@ COPY . .
 # FASE 2: PRODUCCIÓN (Imagen Final - ligera y segura)
 # =========================================================
 # Usamos una imagen PHP FPM para producción (más ligera)
-FROM php:8.3-fpm-alpine as production
+FROM php:8.3-fpm-slim as production
 
 # Instalar extensiones PHP necesarias (versión Alpine)
 # Ajusta 'pdo_pgsql' o 'pdo_mysql' según tu base de datos.
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y \
     nginx \
     supervisor \
-    php83-pdo_pgsql \
-    php83-zip \
-    php83-mbstring \
-    php83-xml \
-    php83-curl \
-    && rm -rf /var/cache/apk/*
+    # Limpiar
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copiar el código y los assets compilados de la etapa 'build'
 WORKDIR /var/www/html
