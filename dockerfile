@@ -91,7 +91,7 @@ EXPOSE 8080
 # Render usa el puerto 8080 como default para Docker si no se especifica.
 
 # El comando CMD ejecuta Supervisor, que inicia PHP-FPM y Nginx
-CMD ["/usr/bin/supervisvisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # NOTA: Asegúrate de que tu .docker/nginx.conf escuche en el puerto 8080.
 #       Asegúrate de que el Start Command en Render esté vacío o que apunte a este CMD.
