@@ -78,8 +78,10 @@ RUN mkdir -p /var/www/html/storage/framework/cache \
     && chown -R www-data:www-data /var/www/html/bootstrap/cache
 
 # Copiar archivos de configuración
-COPY .docker/nginx.conf.template /etc/nginx/conf.d/default.conf
+COPY .docker/nginx.conf.template /etc/nginx/sites-available/default.template
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Exponer el puerto
 EXPOSE 8080
