@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, } from '@inertiajs/react';
+import { Head, Link, useForm, } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
 
@@ -30,6 +30,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index({ products }: { products: Product[] }) {
+const {processing, delete: destroy}=useForm();
+
+const handleDelete=(id: number)=>{
+    if(confirm('Are you sure you want to delete this product')){
+        destroy(route('products.destroy', id));
+    }
+}
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Products | list" />
@@ -72,6 +80,11 @@ export default function Index({ products }: { products: Product[] }) {
                     Edit Product
                 </Button>
                 </Link>
+                <Button
+                disabled={processing}
+className='bg-red-500 hover:bg-red-700'
+onClick={()=>handleDelete(product.id)}
+                >Delete</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

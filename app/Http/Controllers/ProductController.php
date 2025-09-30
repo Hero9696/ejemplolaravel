@@ -75,6 +75,7 @@ return redirect()->route('products.index');
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+return redirect()->route('products.index');
     }
 }
