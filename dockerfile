@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y \
     php8.3-mbstring \
     php8.3-xml \
     php8.3-curl \
+    gettext \
     # Limpiar al final
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
