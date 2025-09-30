@@ -1,21 +1,25 @@
-server {
+# La ruta raíz de tu aplicación Laravel en el contenedor
+root /var/www/html/public;
 
-    listen ${PORT} default_server;
+# Archivos de índice
+index index.php index.html;
 
-    index index.php index.html;
-    root /var/www/html/public; # Usar /var/www/html/public para mayor consistencia en la FASE 2
+# Bloque principal para las rutas de Inertia/Laravel
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
 
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
+# Bloque para pasar archivos PHP a PHP-FPM
+location ~ \.php$ {
+    # Necesario para el FastCGI
+    try_files $uri =404;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
 
-    location ~ \.php$ {
-        try_files $uri =404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass 127.0.0.1:9000; # Conexión al php-fpm
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
-    }
+    # Conecta con el proceso PHP-FPM que Supervisor está ejecutando
+    fastcgi_pass 127.0.0.1:9000;
+
+    fastcgi_index index.php;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param PATH_INFO $fastcgi_path_info;
 }
