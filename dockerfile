@@ -45,6 +45,8 @@ COPY composer.json composer.lock ./
 COPY package.json package-lock.json ./
 COPY vite.config.ts ./
 
+COPY . .
+
 # Instalar dependencias PHP, Node, y compilar React
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install
