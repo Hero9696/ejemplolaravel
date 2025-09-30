@@ -12,25 +12,27 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function ProductCreate() {
     /* , processing, errors  */
-    const { data, setData, post} = useForm({
+    const { data, setData, post, errors } = useForm({
         name: '',
         description: '',
         stock: '',
         price: '',
     });
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
-
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route('products.store'));
-
-    }
+        post(String(route('products.store')));
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Product Create" />
             <div className="w-8/12 p-4">
-                <form onSubmit={handleSubmit} action="post" className="space-y-4">
+                <form
+                    onSubmit={handleSubmit}
+                    action="post"
+                    className="space-y-4"
+                >
                     <div className="gap-1.5">
                         <input
                             type="text"
@@ -40,6 +42,11 @@ export default function ProductCreate() {
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
                         />
+                        {errors.name && (
+                            <div className="mt-1 flex items-center text-sm text-red-500">
+                                {errors.name}
+                            </div>
+                        )}
                     </div>
                     <div className="gap-1.5">
                         <input
@@ -48,8 +55,13 @@ export default function ProductCreate() {
                             placeholder="Product Stock"
                             className="w-full border p-2"
                             value={data.stock}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) => setData('stock', e.target.value)}
                         />
+                         {errors.stock && (
+                            <div className="mt-1 flex items-center text-sm text-red-500">
+                                {errors.stock}
+                            </div>
+                        )}
                     </div>
                     <div className="gap-1.5">
                         <input
@@ -58,15 +70,27 @@ export default function ProductCreate() {
                             placeholder="Product Price"
                             className="w-full border p-2"
                             value={data.price}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) => setData('price', e.target.value)}
                         />
+                         {errors.price && (
+                            <div className="mt-1 flex items-center text-sm text-red-500">
+                                {errors.price}
+                            </div>
+                        )}
                     </div>
                     <div className="gap-1.5">
                         <Textarea
                             placeholder="Product Description"
                             value={data.description}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) =>
+                                setData('description', e.target.value)
+                            }
                         />
+                         {errors.description && (
+                            <div className="mt-1 flex items-center text-sm text-red-500">
+                                {errors.description}
+                            </div>
+                        )}
                     </div>
                     <button
                         type="submit"
